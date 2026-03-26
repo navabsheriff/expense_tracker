@@ -21,6 +21,8 @@ private final JwtAuthenticationFilter jwtAuthenticationFilter;
                 .csrf(csrf -> csrf.disable())
                 .cors(org.springframework.security.config.Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
+                        // 1. Allow the "pre-check" handshake from the browser
+                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/users/register", "/api/users/login")
                         .permitAll()
                         .anyRequest()
